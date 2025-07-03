@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  server:
+    build:
+      context: ./server
+    ports:
+      - "3030:3030"
+    container_name: geoserver
+
+  gps_sender:
+    build:
+      context: ./gps_client
+    depends_on:
+      - server
+    container_name: gpsclient
+    environment:
+      - SERVER_URL=http://geoserver:3030/coords
